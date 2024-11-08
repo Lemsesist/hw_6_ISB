@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="gallery" class="gallery">
+       
+    </div>
+    <div id="fullViewContainer" class="full-view" style="display: none;">
+        <button id="fullViewCloseButton" class="full-view__close-button">x</button>
+        <img id="fullViewImage" class="full-view__image" src="" alt="">
+    </div>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .gallery__image {
+        width: 100%;
+        height: 200px;
+        background-size: cover;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery__image:hover {
+        transform: scale(1.05);
+    }
+
+    .full-view {
+        z-index: 10;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .full-view__image {
+        max-width: 80%;
+        max-height: 80%;
+    }
+
+    .full-view__close-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 40px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+    </style>
+    <script>
+    const gallery = document.getElementById('gallery');
+    const fullViewContainer = document.getElementById('fullViewContainer');
+    const fullViewCloseButton = document.getElementById('fullViewCloseButton');
+    const fullViewImage = document.getElementById('fullViewImage');
+
+    const images = [
+        "https://img.goodfon.ru/wallpaper/big/a/df/kartina-kartiny-art-priroda.webp",
+        "https://ybis.ru/wp-content/uploads/2023/09/osenniaia-priroda-1-1.webp",
+        "https://www.funnyart.club/uploads/posts/2023-04/thumbs/1682869411_funnyart-club-p-osen-v-parke-foni-18.jpg"
+    ];
+
+    images.forEach(createImage);
+
+    function createImage(img) {
+        const imageElement = document.createElement("img");
+        imageElement.src = img; // исправлено на img
+        imageElement.className = "gallery__image";
+        imageElement.addEventListener("click", () => openFullView(img));
+        gallery.appendChild(imageElement);
+    }
+
+    function openFullView(imgSrc) {
+        fullViewImage.src = imgSrc;
+        fullViewContainer.style.display = "flex";
+    }
+
+    fullViewCloseButton.addEventListener("click", () => {
+        fullViewContainer.style.display = "none";
+    });
+    </script>
+</body>
+</html>
